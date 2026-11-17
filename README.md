@@ -10,7 +10,8 @@ Download **index.html** and open it directly in Chrome. There are no servers, AP
 
 - Original navy-and-white design and desktop/mobile navigation
 - Personalized For You feed and searchable Explore directory
-- A 10-question onboarding survey plus adaptive follow-up questions about sports, music, arts, gaming/technology, and outdoor interests
+- **My Schedule:** saving or favoriting a club adds it to your planner; published or clearly labeled demo times display automatically. Unknown meeting schedules are shown as missing, and students can enter their own confirmed day, start/end time, location and frequency. Overlapping recorded times trigger conflict warnings; same-start/unknown-end meetings are flagged as potential conflicts. All personal schedule edits are stored locally.
+- A 10-question onboarding survey plus adaptive follow-up questions about sports, music, arts, gaming/technology, outdoor interests, **food and culture**
 - Rule-based match scores using broad and specific interests, goals, schedule preferences, event preferences, social comfort, and academic interests
 - **Club Posts:** fictional Instagram-style concept feed with stories, likes, comments, and a demonstration post composer
 - Add your own local photo or short video to a demo club post. Media is kept in the current browser's IndexedDB when supported; caption-only posts still work otherwise
@@ -30,9 +31,10 @@ Club media feed posts and student profiles are fictional demo content and are no
 1. Open the HTML file in Chrome.
 2. Complete the onboarding survey, selecting Sports & Fitness and Music & Arts to see conditional follow-up questions.
 3. Open **For You**, inspect calculated matches, and explore club details.
-4. Open **Club Posts**, like/comment on a concept post, and click **Create demo post** to upload a photo or short video locally.
-5. Browse **Explore** and use filters.
-6. Go to **Profile** to edit preferences or **Reset demo**.
+4. Save two clubs, open **Schedule**, enter or edit meeting times, and inspect potential conflicts.
+5. Open **Club Posts**, like/comment on a concept post, and click **Create demo post** to upload a photo or short video locally.
+6. Browse **Explore** and use filters.
+7. Go to **Profile** to edit preferences or **Reset demo**.
 
 ## No live AI backend
 
