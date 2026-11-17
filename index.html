@@ -59,7 +59,463 @@
 /* Unified save control: no redundant favorites or interested actions. */
 .cardactions .unifiedSaved{background:#e8f6ef;border-color:#9bd3b8;color:#126046}
 .detailButtons .primary{max-width:100%;width:100%}
-</style></head><body><div class="app"><aside class="side"><div class="brand"><div class="logo">✦</div>Nittany<span style="color:#77b8ff">Connect</span></div><small>YOUR CAMPUS, YOUR WAY</small><nav class="nav" id="nav"></nav><div class="sidefoot"><b>Find your people. ✨</b><p>Your campus experience starts with one connection.</p><button onclick="startSurvey()">Retake interest survey →</button></div></aside><main class="main"><header class="top"><div class="search"><span>⌕</span><input id="search" placeholder="Search events, clubs, interests..." oninput="visibleCount=24;render()"></div><div class="avatar"><span class="name">Student profile</span><span>NS</span></div></header><div class="content" id="content"></div></main></div><div class="mobilebar" id="mobilebar"></div><div id="modalRoot"></div><script>
+</style>
+<style id="finalSocialRefresh">
+:root{
+  --bg:#eef3fa;
+  --bg2:#f8fbff;
+  --surface:#ffffff;
+  --surface2:#f9fbff;
+  --text:#0f2544;
+  --text2:#40556f;
+  --text3:#6f8198;
+  --line:#dde6f0;
+  --line2:#ebf1f7;
+  --navy:#071e40;
+  --navy2:#0d2b57;
+  --blue:#2b6dff;
+  --blue2:#5b8cff;
+  --sky:#e8f1ff;
+  --green:#14a46e;
+  --greenBg:#ebfbf4;
+  --warn:#b26a13;
+  --warnBg:#fff6e4;
+  --danger:#d2455e;
+  --dangerBg:#fff5f7;
+  --purple:#6c5ce7;
+  --pink:#f04d8f;
+  --radius:26px;
+  --radius-lg:32px;
+  --radius-sm:16px;
+  --shadow-soft:0 20px 60px rgba(14,33,71,.10);
+  --shadow-card:0 16px 34px rgba(10,38,84,.08);
+  --shadow-hover:0 24px 50px rgba(16,48,96,.14);
+}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at top left, rgba(91,140,255,.16), transparent 26%),
+    radial-gradient(circle at top right, rgba(240,77,143,.10), transparent 24%),
+    linear-gradient(180deg,#f4f8fe 0%,#ecf2fa 100%);
+  color:var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+body:before{
+  content:'';position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(135deg, rgba(255,255,255,.2), transparent 35%);
+  z-index:-1;
+}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-thumb{background:#c6d4e6;border:2px solid #eef3fa;border-radius:99px}
+::-webkit-scrollbar-track{background:transparent}
+button,input,select,textarea{font:inherit}
+button{transition:all .2s ease}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+.app{
+  max-width:1500px;
+  min-height:calc(100vh - 36px);
+  margin:18px auto;
+  background:rgba(255,255,255,.78);
+  backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:32px;
+  /* Clip rounded corners without creating a scroll container that breaks sticky navigation. */
+  overflow:clip;
+  box-shadow:0 28px 70px rgba(13,36,77,.13);
+  grid-template-columns:280px minmax(0,1fr);
+}
+.side{
+  background:
+    radial-gradient(circle at top, rgba(104,160,255,.22), transparent 28%),
+    linear-gradient(180deg,#061a38 0%,#0a2450 52%,#081d40 100%);
+  padding:26px 20px 22px;
+  position:sticky;
+  top:18px;
+  align-self:start;
+  height:calc(100vh - 36px);
+  max-height:calc(100dvh - 36px);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+.side:before{
+  content:'';position:absolute;inset:12px;pointer-events:none;border-radius:28px;border:1px solid rgba(255,255,255,.05)
+}
+.brand{font-family:Inter,ui-sans-serif,sans-serif;font-size:24px;font-weight:900;gap:12px;padding:4px 14px;color:#fff}
+.logo{
+  width:46px;height:46px;border-radius:16px;
+  background:linear-gradient(135deg,#fff,#dfe9ff);color:#194a96;font-size:24px;
+  box-shadow:0 14px 28px rgba(0,0,0,.16)
+}
+.brand span:last-child{background:linear-gradient(90deg,#fff 0%,#9fc0ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.side small{font-size:11px;letter-spacing:2.2px;color:#b4c9e5;padding:0 16px}
+.nav{gap:10px}
+.nav button{
+  color:#d3e0f2;
+  border:1px solid transparent;
+  border-radius:18px;
+  padding:15px 16px;
+  font-size:16px;font-weight:800;
+  position:relative;
+}
+.nav button:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+.nav button.active{
+  color:#fff;
+  background:linear-gradient(135deg, rgba(47,118,255,.35), rgba(255,255,255,.08));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10), 0 14px 28px rgba(1,14,42,.26);
+  border-color:rgba(124,176,255,.32)
+}
+.nav button.active:before{content:'';position:absolute;left:11px;top:50%;width:6px;height:22px;border-radius:20px;background:#8cc2ff;transform:translateY(-50%)}
+.nav button svg{width:20px;height:20px}
+.sidefoot{
+  margin-top:auto;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06)
+}
+.sidefoot b{font-size:24px;letter-spacing:-.6px;font-family:Inter,ui-sans-serif,sans-serif;margin-bottom:10px}
+.sidefoot p{font-size:13px;color:#c1d1e3;line-height:1.7}
+.sidefoot button,.primary,.solid,.solidaction,.scheduleNow{
+  background:linear-gradient(135deg,#2b6dff,#174ab8)!important;
+  color:#fff!important;
+  border:0!important;
+  box-shadow:0 10px 24px rgba(26,88,205,.24);
+}
+.sidefoot button:hover,.primary:hover,.solid:hover,.solidaction:hover,.scheduleNow:hover{filter:brightness(1.02);box-shadow:0 18px 34px rgba(26,88,205,.28)}
+.main{
+  min-width:0;
+  background:linear-gradient(180deg, rgba(248,251,255,.98), rgba(243,248,253,.98));
+}
+.top{
+  height:92px;
+  padding:0 34px;
+  background:rgba(255,255,255,.74);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(220,230,242,.9);
+  position:sticky;top:0;z-index:6;
+}
+.search{
+  width:min(520px,58%);
+  background:rgba(245,248,253,.95);
+  border:1px solid rgba(219,229,240,.92);
+  border-radius:18px;
+  padding:14px 18px;
+  color:#8092a8;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7), 0 8px 24px rgba(15,41,83,.04)
+}
+.search input{font-size:14px}
+.avatar{font-size:14px;color:#26456d;gap:14px}
+.avatar span{
+  width:42px;height:42px;
+  background:linear-gradient(135deg,#d9e8ff,#f1f6ff);
+  color:#1e4f9a;
+  box-shadow:0 10px 22px rgba(36,78,148,.10)
+}
+.content{max-width:1200px;padding:36px 40px 96px}
+.eyebrow{font-size:11px;color:#2a6fff;letter-spacing:2.6px}
+.heading h1,.sectionhead h2,.modal h2,.hero h2,.scheduleSectionTitle h2,.socialSidePanel h3,.clubInProfile h3{
+  font-family:Inter, ui-sans-serif, sans-serif;
+  color:#102745;
+}
+.heading h1{font-size:42px;letter-spacing:-1.8px;line-height:1.05}
+.heading p{font-size:15px;color:var(--text3);max-width:760px;line-height:1.65}
+.edit,.secondary,.scheduleToolbar button,.cardactions button,.scheduleEventActions button{
+  border:1px solid #d5e3f3!important;
+  background:#fff!important;
+  color:#18457f!important;
+  border-radius:14px!important;
+  font-weight:800!important;
+  box-shadow:0 8px 18px rgba(14,40,81,.04)
+}
+.edit:hover,.secondary:hover,.scheduleToolbar button:hover,.cardactions button:hover,.scheduleEventActions button:hover{background:#f8fbff!important}
+.hero{
+  margin-top:30px;
+  min-height:280px;
+  border-radius:32px;
+  background:
+    radial-gradient(circle at 70% 10%, rgba(255,255,255,.18), transparent 24%),
+    radial-gradient(circle at 90% 80%, rgba(102,156,255,.28), transparent 18%),
+    linear-gradient(135deg,#081c42 0%, #123c73 42%, #2664df 100%);
+  box-shadow:var(--shadow-soft)
+}
+.hero:before{width:420px;height:420px;right:-95px;top:-160px;border-width:92px;opacity:.7}
+.hero:after{right:70px;bottom:-45px;font-size:250px;opacity:.08}
+.heroText{padding:40px 38px;max-width:640px}
+.hero .tag{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);
+  padding:8px 13px;
+  font-size:11px
+}
+.hero h2{font-size:34px;line-height:1.08;margin:18px 0 12px}
+.hero p{font-size:14px;max-width:540px;color:#d8e6fb}
+.section{margin-top:40px}
+.sectionhead{margin-bottom:18px}
+.sectionhead h2{font-size:24px;letter-spacing:-.8px}
+.sectionhead button{font-size:13px}
+.chips{gap:10px;padding-bottom:8px}
+.chip{
+  border:1px solid #d9e5f0;
+  border-radius:999px;
+  padding:11px 16px;
+  background:rgba(255,255,255,.88);
+  color:#5b6d84;
+  font-size:12px;
+  box-shadow:0 6px 16px rgba(14,40,81,.03)
+}
+.chip.sel{
+  color:#fff;background:linear-gradient(135deg,#173c75,#2b6dff);border-color:transparent;
+  box-shadow:0 12px 24px rgba(25,76,176,.22)
+}
+.cards{grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px}
+.card,.feedcard,.socialPost,.socialSidePanel,.profilePanel,.scheduleToolbar,.scheduleConflict,.scheduleClubList,.scheduleScroll,.scheduleArchived,.scheduleIntro,.clubInProfile,.modal{
+  border:1px solid rgba(221,230,240,.95)!important;
+  background:rgba(255,255,255,.94)!important;
+  box-shadow:var(--shadow-card)!important;
+}
+.card,.feedcard{border-radius:24px!important;overflow:hidden!important}
+.card:hover,.feedcard:hover,.socialPost:hover,.profilePanel:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)!important}
+.art{height:175px;border-bottom:1px solid rgba(255,255,255,.12)}
+.art .symbol{font-size:76px;transform:rotate(-6deg)}
+.art:after{width:220px;height:220px;border-width:34px;right:-95px;top:-105px}
+.save{
+  right:16px;top:16px;width:40px;height:40px;font-size:20px;
+  border:1px solid rgba(255,255,255,.45);
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 24px rgba(15,45,87,.12)
+}
+.save.saved{background:rgba(255,244,247,.96);color:#df4f79}
+.body{padding:20px 20px 18px}
+.meta{font-size:10px;letter-spacing:1.5px;color:#3277e6}
+.body h3{font-size:18px;line-height:1.35;margin:10px 0 9px;color:#102745}
+.body p{font-size:13px;line-height:1.7;color:#61748c}
+.cardtime{font-size:12px;color:#6d8197}
+.reason{
+  background:linear-gradient(180deg,#f4f8ff,#eef5ff);
+  border:1px solid #dbe7fb;
+  border-radius:16px;
+  padding:12px 13px;
+  color:#29557d;
+  font-size:12px;
+}
+.bottom{align-items:flex-end}
+.match{
+  background:var(--greenBg);
+  color:#0f9160;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:11px;
+  letter-spacing:.2px
+}
+.arrow{
+  width:34px;height:34px;border-radius:12px;
+  background:#eff5ff;color:#1d67d0
+}
+.metric,.profilePanel,.socialNotice{
+  border-radius:22px!important;
+  background:rgba(255,255,255,.92)!important;
+  border:1px solid rgba(222,232,241,.96)!important;
+  box-shadow:0 12px 28px rgba(12,39,81,.06)
+}
+.metric{padding:18px 18px 16px}
+.metric b{font-size:30px;color:#113972}
+.metric span{font-size:12px;color:#7a8ea5}
+.modal{border-radius:30px!important;padding:30px 30px 28px;max-width:min(640px,100%)}
+.overlay{backdrop-filter:blur(10px);background:rgba(6,24,49,.56)}
+.close{background:#eef4fb;border:1px solid #dbe5f0;color:#5f738b}
+.progress i,.surveyBar{background:#e6eef8}
+.progress i.on{background:linear-gradient(90deg,#2b6dff,#6aa0ff)}
+.options{gap:12px}
+.opt{
+  padding:16px;border:1px solid #dce6f1;border-radius:18px;
+  background:linear-gradient(180deg,#fff,#fafcff);min-height:68px
+}
+.opt.on{background:linear-gradient(180deg,#eff6ff,#e7f0ff);border-color:#8fb9ff;color:#114f9a;box-shadow:0 12px 24px rgba(28,85,178,.10)}
+.surveyTop,.surveyPrompt{color:#102745}
+.surveyCount,.subtle,.surveyNote,.scheduleFooter,.smallHint{color:#7a8ea4!important}
+.detailTop{
+  height:160px;border-radius:22px;
+  background:linear-gradient(135deg,#eff5ff,#d8e8ff);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65)
+}
+.detailInfo{gap:14px}
+.detailInfo div,.profileRow,.studentRow,.socialCaption,.socialComment{line-height:1.7}
+.detailButtons,.scheduleDetailActions,.cardactions{gap:10px;flex-wrap:wrap}
+.detailButtons button,.scheduleDetailActions button,.cardactions button{min-height:42px;padding:11px 14px}
+.detailButtons .primary{max-width:100%;width:auto;min-width:150px}
+/* Instagram-inspired social feed */
+.socialActionsHeader{align-items:flex-end;margin-bottom:18px}
+.socialStories{
+  gap:14px;padding:4px 0 14px;overflow:auto;scrollbar-width:none
+}
+.socialStories::-webkit-scrollbar{display:none}
+.socialStory{min-width:92px;gap:8px}
+.storyRing{
+  width:72px;height:72px;border-radius:50%;
+  background:conic-gradient(from 180deg, #ffd56a, #f15a8c, #6b63ff, #35b7ff, #ffd56a);
+  padding:3px;display:grid;place-items:center;
+  box-shadow:0 12px 24px rgba(70,43,169,.16)
+}
+.storyRing>div,.storyRing img,.storyRing span{
+  width:100%;height:100%;border-radius:50%;background:#fff;display:grid;place-items:center
+}
+.socialStory span,.socialStory b{font-size:11px;color:#4f6279;text-align:center}
+.socialFeedLayout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(290px,.85fr);gap:20px;align-items:start}
+.socialFeed{display:grid;gap:18px}
+.socialPost{
+  border-radius:28px!important;overflow:hidden;
+}
+.socialPostHead{padding:16px 18px 12px;border-bottom:1px solid #edf2f7;background:linear-gradient(180deg,#ffffff,#fbfdff)}
+.socialAuthor{gap:12px}
+.socialOrgAvatar{
+  width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#eff5ff,#d9e8ff);font-size:26px;
+  box-shadow:0 10px 24px rgba(19,64,132,.09)
+}
+.socialPostAge,.socialDots{color:#8ba0b8}
+.socialIllustration{padding:26px;min-height:290px;background:linear-gradient(135deg,#17355c,#2b6dff)}
+.socialArtTop{gap:12px}
+.socialArtTitle{font-family:Inter,ui-sans-serif,sans-serif;font-weight:900;font-size:32px;letter-spacing:-1px}
+.socialArtBottom{font-size:14px;color:#dbe7fb;line-height:1.7}
+.socialMedia{background:#f6f9fe;border-top:1px solid #edf2f7}
+.socialUploadedMedia,.socialMedia img,.socialMedia video{width:100%;display:block;object-fit:cover;max-height:420px}
+.socialPostBody{padding:16px 18px 18px}
+.socialFeedback{display:flex;gap:18px;align-items:center;font-size:13px;color:#4f6480;font-weight:700;margin-bottom:12px}
+.socialPostActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.socialPostActions button,.socialCommentBar button,.loadmore,.resetButton{
+  border:1px solid #dae5f1;background:#fff;color:#19457f;border-radius:14px;padding:10px 13px;font-weight:800;box-shadow:0 6px 16px rgba(13,39,82,.05)
+}
+.socialPostActions .heartOn{background:#fff3f6;border-color:#ffd1dd;color:#d5406a}
+.socialCommentBar{display:flex;gap:9px;align-items:center;margin-top:14px}
+.socialCommentBar input{flex:1;border:1px solid #dbe6f1;border-radius:14px;padding:11px 13px;background:#f8fbff}
+.socialComment{padding:11px 13px;background:#f6f9fd;border:1px solid #e5edf5;border-radius:16px;margin-top:10px;color:#536a84}
+.socialSidePanel{border-radius:26px!important;padding:20px;position:sticky;top:112px}
+.socialSidePanel h3{font-size:20px;margin:8px 0 10px}
+.socialSidePanel p{font-size:13px;color:#6d8098}
+.socialNotice{padding:16px 18px;border-radius:20px}
+.socialNotice b{display:block;margin-bottom:6px;color:#113972}
+.composerSelect,.composerText,.composerInput,.scheduleField,.scheduleFormTimes input{
+  border-radius:16px;border:1px solid #d9e4f1;background:#f9fbff;padding:12px 14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.75)
+}
+.composerPreview{border-radius:20px;background:linear-gradient(180deg,#f9fbff,#f2f6fc);border:1px dashed #cbdbec}
+/* Schedule styling with calendar-app feel */
+.scheduleIntro,.scheduleArchived,.scheduleEventHint{
+  border-radius:20px!important;
+}
+.scheduleToolbar{padding:16px 18px;border-radius:22px!important;position:sticky;top:104px;z-index:2}
+.scheduleToolbar strong{font-size:18px;letter-spacing:-.3px}
+.scheduleScroll{border-radius:26px!important;overflow:hidden}
+.scheduleGrid{background:linear-gradient(180deg,#fff,#fbfdff)}
+.scheduleDay{min-height:240px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,252,255,.96))}
+.scheduleDayHead{
+  padding:16px 6px 14px;
+  background:linear-gradient(180deg,#f7faff,#eef4fb);
+  font-size:13px;color:#244d7a
+}
+.scheduleDayHead.today{background:linear-gradient(180deg,#edf5ff,#dfedff);color:#1758a0}
+.scheduleDayBody{padding:12px 8px;gap:10px}
+.scheduleEmpty{font-size:12px;color:#a3b2c2;padding:28px 6px}
+.scheduleEntry{
+  border-radius:15px;
+  padding:11px 10px;
+  border:1px solid #d4e6ff;
+  background:linear-gradient(180deg,#f7fbff,#eef5ff);
+  box-shadow:0 10px 18px rgba(19,64,132,.06)
+}
+.scheduleEntry.sample{
+  background:linear-gradient(180deg,#fffbf3,#fff5df);
+  border-color:#f4ddb3;color:#704c1d
+}
+.scheduleEntry.eventItem{
+  background:linear-gradient(180deg,#effbf5,#e6f7ef);
+  border-color:#b7e0cb;color:#145944
+}
+.scheduleEntry.eventItem.sample{
+  background:linear-gradient(180deg,#fff9ed,#fff3dd);
+  border-color:#f0d39c;color:#845918
+}
+.scheduleEntryTime{font-size:10px;letter-spacing:.4px;text-transform:uppercase}
+.scheduleConflict{
+  background:linear-gradient(180deg,#fffafb,#fff5f7)!important;
+  border-color:#f2ccd4!important;
+  border-radius:24px!important;
+}
+.scheduleConflict h2{font-size:28px;letter-spacing:-.8px}
+.conflictRow{padding:16px 2px}
+.scheduleClubList{border-radius:24px!important}
+.scheduleClubItem{padding:16px 18px}
+.scheduleClubIcon{width:46px;height:46px;border-radius:16px;font-size:22px;background:linear-gradient(135deg,#eef5ff,#dbeaff)}
+.scheduleClubInfo strong{font-size:15px}
+.scheduleClubInfo p{font-size:13px;margin:5px 0 6px}
+.scheduleEventLegend{font-size:12px}
+.scheduleLegendDot{border-radius:999px}
+.scheduleModal{max-width:700px}
+.scheduleDaysInput{gap:8px}
+.scheduleDayOption{border-radius:14px;padding:12px 0;background:#fbfdff}
+.scheduleDayOption:has(input:checked){box-shadow:0 12px 20px rgba(28,85,178,.12)}
+.scheduleEditorBottom{margin-top:14px}
+.profilePanel{padding:20px 22px;border-radius:26px!important}
+.profileRow{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid #edf2f7}
+.profileRow:last-child{border-bottom:0}
+.studentRow{border-radius:18px;background:#f7faff;border:1px solid #e0ebf6;padding:14px 16px}
+.connectBadge{border-radius:999px;background:#eef6ff;color:#2366cc;padding:7px 10px;font-size:11px;font-weight:800}
+.empty{
+  border:1px dashed #cedae7;background:linear-gradient(180deg,#fff,#f8fbff);border-radius:24px;color:#7f92a9;padding:44px 28px
+}
+.mobilebar{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(14px);
+  border-top:1px solid rgba(215,227,239,.95);
+  box-shadow:0 -10px 28px rgba(10,33,72,.08)
+}
+.mobilebar button{color:#788ca5;font-size:10px}
+.mobilebar button.active{color:#1d60c8}
+.mobilebar svg{width:22px;height:22px}
+.loadmoreWrap{text-align:center;margin-top:12px}
+.tag,.connectBadge,.match,.meta,.eventPin{font-weight:800}
+@media (max-width:1200px){
+  .app{grid-template-columns:240px minmax(0,1fr)}
+  .content{padding:32px 30px 96px}
+  .heading h1{font-size:38px}
+}
+@media (max-width:980px){
+  .socialFeedLayout{grid-template-columns:minmax(0,1fr)}
+  .socialRail{display:none}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+}
+@media (max-width:720px){
+  body{background:linear-gradient(180deg,#f6f9fe,#eef3fa)}
+  .app{margin:0;min-height:100vh;border-radius:0;box-shadow:none;border:0}
+  .top{height:74px;padding:0 18px}
+  .search{width:72%;padding:11px 14px;border-radius:16px}
+  .content{padding:22px 18px 110px}
+  .heading{align-items:flex-start;flex-direction:column}
+  .heading h1{font-size:30px;margin-bottom:6px}
+  .hero{min-height:260px;border-radius:26px}
+  .heroText{padding:26px 22px}
+  .hero h2{font-size:28px}
+  .sectionhead h2{font-size:21px}
+  .cards{grid-template-columns:1fr;gap:14px}
+  .card,.feedcard,.socialPost,.socialSidePanel,.profilePanel,.metric{border-radius:22px!important}
+  .art{height:160px}
+  .storyRing{width:64px;height:64px}
+  .socialStory{min-width:84px}
+  .socialPostHead,.socialPostBody{padding-left:14px;padding-right:14px}
+  .socialIllustration{padding:22px;min-height:240px}
+  .socialArtTitle{font-size:28px}
+  .scheduleToolbar{position:static;top:auto}
+  .scheduleConflict h2{font-size:22px}
+  .scheduleClubItem{align-items:flex-start;flex-wrap:wrap}
+  .detailButtons .primary{width:100%}
+  .detailButtons button,.cardactions button,.scheduleEventActions button{width:100%}
+}
+</style>
+
+</head><body><div class="app"><aside class="side"><div class="brand"><div class="logo">✦</div>Nittany<span style="color:#77b8ff">Connect</span></div><small>YOUR CAMPUS, YOUR WAY</small><nav class="nav" id="nav"></nav><div class="sidefoot"><b>Find your people. ✨</b><p>Your campus experience starts with one connection.</p><button onclick="startSurvey()">Retake interest survey →</button></div></aside><main class="main"><header class="top"><div class="search"><span>⌕</span><input id="search" placeholder="Search events, clubs, interests..." oninput="visibleCount=24;render()"></div><div class="avatar"><span class="name">Student profile</span><span>NS</span></div></header><div class="content" id="content"></div></main></div><div class="mobilebar" id="mobilebar"></div><div id="modalRoot"></div><script>
 const labels={home:'For You',explore:'Explore',social:'Club Posts',schedule:'Schedule',saved:'Saved',profile:'Profile'};
 const icons={home:'⌂',explore:'◈',social:'▣',schedule:'▦',saved:'♡',profile:'♙'};
 const questions=[
