@@ -10,12 +10,12 @@ Download **index.html** and open it directly in Chrome. There are no servers, AP
 
 - Original navy-and-white design and desktop/mobile navigation
 - Personalized For You feed and searchable Explore directory
-- **My Schedule:** saving or favoriting any club adds it to the weekly calendar immediately. Every one of the 127 clubs has a displayed meeting schedule: publisher information when provided, otherwise clearly labeled **fictional demo times and durations** for classroom testing. Overlapping times produce warnings; personal adjustments override the demo times and are stored locally. These sample times and locations are not Penn State listings and must not be used to attend meetings.
+- **My Schedule:** One shared Save action for clubs and events. Saved clubs appear as recurring meetings; saved future events appear on their actual date (or a clearly labeled fictional date for demo-only samples). If published times are missing, estimated demonstration times are labeled as such. Overlap warnings work for club/club, event/event, and club/event conflicts. Past events remain saved but are archived off the upcoming calendar.
 - A 10-question onboarding survey plus adaptive follow-up questions about sports, music, arts, gaming/technology, outdoor interests, **food and culture**
 - Rule-based match scores using broad and specific interests, goals, schedule preferences, event preferences, social comfort, and academic interests
 - **Club Posts:** fictional Instagram-style concept feed with stories, likes, comments, and a demonstration post composer
 - Add your own local photo or short video to a demo club post. Media is kept in the current browser's IndexedDB when supported; caption-only posts still work otherwise
-- Save opportunities, favorite organizations, open details, and view fictional student connection requests
+- **Save** organizations or events, open details, and view fictional student connection requests. Previous favorites and interested-list choices migrate into Saved.
 - Profile editing and a reset button for live demonstrations
 
 ## About the catalog
