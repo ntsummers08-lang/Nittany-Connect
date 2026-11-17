@@ -10,7 +10,7 @@ Download **index.html** and open it directly in Chrome. There are no servers, AP
 
 - Original navy-and-white design and desktop/mobile navigation
 - Personalized For You feed and searchable Explore directory
-- **My Schedule:** saving or favoriting a club adds it to your planner; published or clearly labeled demo times display automatically. Unknown meeting schedules are shown as missing, and students can enter their own confirmed day, start/end time, location and frequency. Overlapping recorded times trigger conflict warnings; same-start/unknown-end meetings are flagged as potential conflicts. All personal schedule edits are stored locally.
+- **My Schedule:** saving or favoriting any club adds it to the weekly calendar immediately. Every one of the 127 clubs has a displayed meeting schedule: publisher information when provided, otherwise clearly labeled **fictional demo times and durations** for classroom testing. Overlapping times produce warnings; personal adjustments override the demo times and are stored locally. These sample times and locations are not Penn State listings and must not be used to attend meetings.
 - A 10-question onboarding survey plus adaptive follow-up questions about sports, music, arts, gaming/technology, outdoor interests, **food and culture**
 - Rule-based match scores using broad and specific interests, goals, schedule preferences, event preferences, social comfort, and academic interests
 - **Club Posts:** fictional Instagram-style concept feed with stories, likes, comments, and a demonstration post composer
@@ -31,7 +31,7 @@ Club media feed posts and student profiles are fictional demo content and are no
 1. Open the HTML file in Chrome.
 2. Complete the onboarding survey, selecting Sports & Fitness and Music & Arts to see conditional follow-up questions.
 3. Open **For You**, inspect calculated matches, and explore club details.
-4. Save two clubs, open **Schedule**, enter or edit meeting times, and inspect potential conflicts.
+4. Save **Anime Organization** and **Gamers for Charity**, then open **Schedule**. Their fictional Thursday meeting times overlap and trigger an immediate conflict warning. Change one time to demonstrate resolution.
 5. Open **Club Posts**, like/comment on a concept post, and click **Create demo post** to upload a photo or short video locally.
 6. Browse **Explore** and use filters.
 7. Go to **Profile** to edit preferences or **Reset demo**.
